@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { AlumnosRoutingModule } from './alumnos-routing.module';
 import { StoreModule } from '@ngrx/store';
-import * as fromAlumnos from './reducers';
+import * as fromAlumnosStore from './store';
+
+//import * as fromAlumnos from './reducers/alumnos.reducer';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     AlumnosRoutingModule,
-    StoreModule.forFeature(fromAlumnos.alumnosFeatureKey, fromAlumnos.reducers, { metaReducers: fromAlumnos.metaReducers })
+    StoreModule.forFeature(fromAlumnosStore.alumnosStoreFeatureKey, fromAlumnosStore.reducers, { metaReducers: fromAlumnosStore.metaReducers })
   ]
 })
 export class AlumnosModule { }
