@@ -6,18 +6,18 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
-import * as fromAlumnosReducer from './alumnos-reducer.reducer';
+import * as fromAlumnosReducer from './alumnos.reducer';
 
 export const alumnosStoreFeatureKey = 'alumnosStore';
 
 export interface AlumnosStoreState {
 
-  [fromAlumnosReducer.alumnosReducerFeatureKey]: fromAlumnosReducer.AlumnosReducerState;
+  [fromAlumnosReducer.alumnosFeatureKey]: fromAlumnosReducer.AlumnosState;
 }
 
 export const reducers: ActionReducerMap<AlumnosStoreState> = {
 
-  [fromAlumnosReducer.alumnosReducerFeatureKey]: fromAlumnosReducer.alumnosReducer,
+  [fromAlumnosReducer.alumnosFeatureKey]: fromAlumnosReducer.alumnosReducer,
 };
 
 

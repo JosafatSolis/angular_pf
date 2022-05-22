@@ -7,13 +7,18 @@ export const cargarAlumnos = createAction(
 
 export const cargarAlumnosSuccess = createAction(
   '[Alumnos] Cargar Alumnos Success',
-  props<{ data: any }>()
+  props<{ alumnos: AlumnoItem[] }>()
 );
 
 export const cargarAlumnosFailure = createAction(
   '[Alumnos] Cargar Alumnos Failure',
   props<{ error: any }>()
 );
+
+export const cargarAlumno = createAction(
+  '[Alumnos] Cargar Alumno',
+  props<{id: number}>()
+)
 
 export const alumnoActualizado = createAction(
   '[Alumnos] Alumno Actualizado',
