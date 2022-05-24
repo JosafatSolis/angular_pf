@@ -1,23 +1,29 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { AlumnosStoreState } from '.';
-import { AlumnosState } from './alumnos.reducer';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { AlumnosAppState, alumnosStoreFeatureKey } from '.';
 
-export const selectorAlumnos = (state: AlumnosStoreState) => state.alumnos;
+// Se especifica el tipo del AppState del Feature y la llave del Store
+const selectorAlumnos = createFeatureSelector<AlumnosAppState>(alumnosStoreFeatureKey);
 
 // cargandoAlumnos
 export const selectorCargandoAlumnos = createSelector(
     selectorAlumnos,
-    (state: AlumnosState) => state.cargandoAlumnos
+    (featureState) => featureState.alumnosState.cargandoAlumnos
 )
 
 // alumnosCargados
 export const selectorAlumnosCargados = createSelector(
     selectorAlumnos,
-    (state: AlumnosState) => state.alumnosCargados
+    (featureState) => featureState.alumnosState.alumnosCargados
 )
-
+    
 // alumnoActual
 export const selectorAlumnoActual = createSelector(
     selectorAlumnos,
-    (state: AlumnosState) => state.alumnoActual
+    (featureState) => featureState.alumnosState.alumnoActual
+)
+
+// estadoError
+export const selectorEstadoError = createSelector(
+    selectorAlumnos,
+    (estado) => estado.alumnosState.estadoError
 )

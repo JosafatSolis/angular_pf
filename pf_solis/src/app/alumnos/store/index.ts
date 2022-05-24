@@ -10,15 +10,16 @@ import * as fromAlumnosReducer from './alumnos.reducer';
 
 export const alumnosStoreFeatureKey = 'alumnosStore';
 
-export interface AlumnosStoreState {
+// Se liga el ReducerState con una llave en el FeatureState, y la llave con un Reducer.
+export interface AlumnosAppState {
 
-  [fromAlumnosReducer.alumnosFeatureKey]: fromAlumnosReducer.AlumnosState;
+  [fromAlumnosReducer.alumnosFeatureKey]: fromAlumnosReducer.AlumnosFeatureState;
 }
 
-export const reducers: ActionReducerMap<AlumnosStoreState> = {
+export const reducers: ActionReducerMap<AlumnosAppState> = {
 
   [fromAlumnosReducer.alumnosFeatureKey]: fromAlumnosReducer.alumnosReducer,
 };
 
 
-export const metaReducers: MetaReducer<AlumnosStoreState>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<AlumnosAppState>[] = !environment.production ? [] : [];

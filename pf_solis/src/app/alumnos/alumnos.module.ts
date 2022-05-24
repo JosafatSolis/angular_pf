@@ -8,11 +8,14 @@ import * as fromAlumnosStore from './store';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { AlumnosEffects } from './store/alumnos.effects';
+import { ListaAlumnosComponent } from './lista-alumnos/lista-alumnos.component';
 
 //import * as fromAlumnos from './reducers/alumnos.reducer';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ListaAlumnosComponent
+  ],
   imports: [
     CommonModule,
     AlumnosRoutingModule,

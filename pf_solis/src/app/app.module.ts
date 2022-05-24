@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { AlumnosModule } from './alumnos/alumnos.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserAnimationsModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    AlumnosModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
