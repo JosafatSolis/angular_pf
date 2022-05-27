@@ -24,3 +24,13 @@ export const alumnoActualizado = createAction(
   '[Alumnos] Alumno Actualizado',
   props<{ alumno: AlumnoItem }>()
 )
+
+export const eliminarAlumno = createAction(
+  '[Alumnos] Eliminar Alumno',
+  props<{id: number}>()
+)
+
+export const eliminarAlumnoFailure = createAction(
+  '[Alumno] Eliminar Alumno Failure',
+  props<{error: any}>()
+)

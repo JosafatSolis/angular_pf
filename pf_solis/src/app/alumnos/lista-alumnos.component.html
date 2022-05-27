@@ -1,0 +1,51 @@
+
+<p *ngIf="strEstadoError">Ocurrió un error, detalles técnicos:<br> {{strEstadoError}}</p>
+
+<div *ngIf="!strEstadoError">
+    <div class="cont-espaciado">
+        <span>Alumnos Registrados</span>
+        <span class="espaciado"></span>
+        <button mat-button type="button">Nuevo</button>
+    </div>
+    <div>
+        <table mat-table [dataSource]="alumnos$ || []">
+            <!-- Matricula Column -->
+            <ng-container matColumnDef="matricula">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Matricula</th>
+                <td mat-cell *matCellDef="let element"> {{element.matricula}} </td>
+            </ng-container>
+
+            <!-- Nombre Column -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Nombre</th>
+                <td mat-cell *matCellDef="let element" class="padding-left"> {{element.nombre}} </td>
+            </ng-container>
+
+            <!-- Apellidos Column -->
+            <ng-container matColumnDef="apellidos" class="padding-headers">
+                <th mat-header-cell *matHeaderCellDef>Apellido(s)</th>
+                <td mat-cell *matCellDef="let element" class="padding-left"> {{element.apellidos}} </td>
+            </ng-container>
+            
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Email</th>
+                <td mat-cell *matCellDef="let element" class="padding-left"> {{element.email}} </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers"></th>
+                <td mat-cell *matCellDef="let element" class="padding-left">
+                    <a (click)="onEditarClick(element)" class="hand-pointer">Editar</a> |
+                    <a (click)="onEliminarClick(element)" class="hand-pointer">Eliminar</a> |
+                    <a (click)="onDetallesClick(element)" class="hand-pointer">Detalles</a>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="changeRowSelected(row)"
+                [class.demo-row-is-clicked]="selectedRow == row"></tr>
+        </table>
+    </div>
+</div>

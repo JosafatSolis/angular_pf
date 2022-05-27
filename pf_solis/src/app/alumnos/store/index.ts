@@ -21,5 +21,4 @@ export const reducers: ActionReducerMap<AlumnosAppState> = {
   [fromAlumnosReducer.alumnosFeatureKey]: fromAlumnosReducer.alumnosReducer,
 };
 
-
 export const metaReducers: MetaReducer<AlumnosAppState>[] = !environment.production ? [] : [];

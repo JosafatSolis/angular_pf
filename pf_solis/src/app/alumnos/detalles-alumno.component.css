@@ -1,0 +1,17 @@
+.espaciado {
+    flex: 1 1 auto;
+  }
+
+.cont-espaciado {
+    display: flex;
+    align-items: center;
+}
+
+.padding-headers {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.padding-left {
+  padding-left: 15px;
+}

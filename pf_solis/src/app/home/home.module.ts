@@ -2,13 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
+import { MaterialModule } from '../shared/material.module';
+
+import { HomeComponent } from './home.component';
+import { ToolbarComponent } from './toolbar.component';
+import { NavbarComponent } from './navbar.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HomeComponent,
+    ToolbarComponent,
+    NavbarComponent,
+  ],
   imports: [
     CommonModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    MaterialModule
   ]
 })
 export class HomeModule { }
