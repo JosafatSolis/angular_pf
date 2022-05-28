@@ -34,3 +34,23 @@ export const eliminarAlumnoFailure = createAction(
   '[Alumno] Eliminar Alumno Failure',
   props<{error: any}>()
 )
+
+export const guardarAlumno = createAction(
+  '[Alumno] Guardar Alumno',
+  props<{alumno: AlumnoItem}>()
+)
+
+export const guardarAlumnoFailure = createAction(
+  '[Alumno] Guardar Alumno Failure',
+  props<{error: any}>()
+)
+
+export const crearAlumno = createAction(
+  '[Alumno] Crear Alumno',
+  props<{ alumno: AlumnoItem}>()
+)
+
+export const crearAlumnoFailure = createAction(
+  '[Alumno] Crear Alumno Failure',
+  props<{ error: any }>()
+)

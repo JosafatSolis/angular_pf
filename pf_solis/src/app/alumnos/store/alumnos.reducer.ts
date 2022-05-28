@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { AlumnoItem } from '../alumno-item';
-import { alumnoActualizado, cargarAlumno, cargarAlumnos, cargarAlumnosFailure, cargarAlumnosSuccess, eliminarAlumno, eliminarAlumnoFailure } from './alumnos.actions';
+import { alumnoActualizado, cargarAlumno, cargarAlumnos, cargarAlumnosFailure, cargarAlumnosSuccess, eliminarAlumno, eliminarAlumnoFailure, guardarAlumno, guardarAlumnoFailure } from './alumnos.actions';
 
 
 export const alumnosFeatureKey = 'alumnosState';
@@ -40,6 +40,12 @@ export const alumnosReducer = createReducer(
     return {...estado, estadoError: ''}
   }),
   on(eliminarAlumnoFailure, (estado, {error}) => {
+    return {...estado, estadoError: error.message}
+  }),
+  on(guardarAlumno, (estado, {alumno}) => {
+    return {...estado}
+  }),
+  on(guardarAlumnoFailure, (estado, { error }) => {
     return {...estado, estadoError: error.message}
   })
 );

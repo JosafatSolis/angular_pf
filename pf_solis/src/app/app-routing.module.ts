@@ -5,9 +5,10 @@ const routes: Routes = [
   {
     path: '', redirectTo: 'home', pathMatch: 'full'
   },
-  {
-    path: '**', redirectTo: 'home'
-  }
+  // ** RESOLVER POR QUÉ NO DEJA ENTRAR A /home/alumnos/3
+  // {
+  //   path: '**', redirectTo: 'home'
+  // }
 ];
 
 @NgModule({

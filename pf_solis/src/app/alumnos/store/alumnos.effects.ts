@@ -11,10 +11,15 @@ import {
   cargarAlumnosFailure,
   eliminarAlumno,
   eliminarAlumnoFailure,
+  guardarAlumno,
+  guardarAlumnoFailure,
+  crearAlumno,
+  crearAlumnoFailure,
 } from './alumnos.actions';
 
 @Injectable()
 export class AlumnosEffects {
+  // cargarAlumnos --> cargarAlumnosSuccess / cargarAlumnosFailure
   cargarAlumnosEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(cargarAlumnos),
@@ -31,6 +36,7 @@ export class AlumnosEffects {
     )
   );
 
+  // cargarAlumno --> alumnoActualizado
   cargarAlumnoEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(cargarAlumno),
@@ -42,6 +48,7 @@ export class AlumnosEffects {
     )
   );
 
+  // eliminarAlumno --> cargarAlumnos / eliminarAlumnoFailure
   eliminarAlumnoEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(eliminarAlumno),
@@ -53,6 +60,37 @@ export class AlumnosEffects {
           catchError((error) => {
             return of(eliminarAlumnoFailure({ error }));
           })
+        )
+      )
+    )
+  );
+
+  // guardarAlumno --> alumnoActualizado
+  guardarAlumnoEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(guardarAlumno),
+      switchMap((guardarAlumnoAction) => {
+        return this.as.updateAlumno(guardarAlumnoAction.alumno).pipe(
+          map((alumno: AlumnoItem) => {
+            return alumnoActualizado({ alumno });
+          }),
+          catchError((error) => {
+            return of(guardarAlumnoFailure({ error }));
+          })
+        );
+      })
+    )
+  );
+
+  // crearAlumno --> alumnoActualizado
+  // Sin uso de return, para fines académicos
+  crearAlumnoEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(crearAlumno),
+      switchMap((crearAlumnoAction) =>
+        this.as.addAlumno(crearAlumnoAction.alumno).pipe(
+          map((alumno: AlumnoItem) => alumnoActualizado({ alumno })),
+          catchError((error) => of(crearAlumnoFailure({ error })))
         )
       )
     )

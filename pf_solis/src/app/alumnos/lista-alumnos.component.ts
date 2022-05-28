@@ -60,8 +60,12 @@ export class ListaAlumnosComponent implements OnInit {
     })
   }
 
-  onDetallesClick(element: AlumnoItem) {
-    this.router.navigate([String(element.id)], {relativeTo: this.route, queryParams: { readOnly: true }})    
+  onDetallesClick(alumno: AlumnoItem) {
+    this.router.navigate([String(alumno.id)], {relativeTo: this.route, queryParams: { readOnly: true }})    
+  }
+
+  onNuevoClick() {
+    this.router.navigate(['0'], {relativeTo: this.route, queryParams: { new: true }})
   }
 
 }
