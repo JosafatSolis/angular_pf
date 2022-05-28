@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { AlumnosEffects } from './store/alumnos.effects';
 import { ListaAlumnosComponent } from './lista-alumnos.component';
-import { DialogConfirmarBorradoComponent } from './dialog-confirmar-borrado-component.component';
+import { ConfirmarBorradoAlumnosComponent } from './confirmar-borrado-alumnos.component';
 import { DetallesAlumnoComponent } from './detalles-alumno.component';
 
 //import * as fromAlumnos from './reducers/alumnos.reducer';
@@ -22,7 +22,7 @@ import { DetallesAlumnoComponent } from './detalles-alumno.component';
 @NgModule({
   declarations: [
     ListaAlumnosComponent,
-    DialogConfirmarBorradoComponent,
+    ConfirmarBorradoAlumnosComponent,
     DetallesAlumnoComponent
   ],
   imports: [

@@ -7,7 +7,7 @@ import * as fromStore from './store';
 import { cargarAlumnos, eliminarAlumno } from './store/alumnos.actions';
 import { selectorAlumnosCargados, selectorEstadoError } from './store/alumnos.selectors';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogConfirmarBorradoComponent } from './dialog-confirmar-borrado-component.component';
+import { ConfirmarBorradoAlumnosComponent } from './confirmar-borrado-alumnos.component';
 
 @Component({
   selector: 'app-lista-alumnos',
@@ -48,7 +48,7 @@ export class ListaAlumnosComponent implements OnInit {
   }
 
   onEliminarClick(element: AlumnoItem): void {
-    const dialogRef = this.dialog.open(DialogConfirmarBorradoComponent, {
+    const dialogRef = this.dialog.open(ConfirmarBorradoAlumnosComponent, {
       width: '400px',
       data: element
     });

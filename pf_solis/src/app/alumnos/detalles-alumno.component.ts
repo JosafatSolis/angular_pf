@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { Observable, take } from 'rxjs';
 import { CursoItem } from '../cursos/curso-item';
 import { AlumnoItem } from './alumno-item';
-import { DialogConfirmarBorradoComponent } from './dialog-confirmar-borrado-component.component';
+import { ConfirmarBorradoAlumnosComponent } from './confirmar-borrado-alumnos.component';
 import * as fromStore from './store';
 import {
   alumnoActualizado,
@@ -182,7 +182,7 @@ export class DetallesAlumnoComponent implements OnInit {
   // Eliminar el registro del Alumno
   onEliminarClick() {
     this.alumno$.pipe(take(1)).subscribe((alumno) => {
-      const dialogRef = this.dialog.open(DialogConfirmarBorradoComponent, {
+      const dialogRef = this.dialog.open(ConfirmarBorradoAlumnosComponent, {
         width: '400px',
         data: alumno
       });
