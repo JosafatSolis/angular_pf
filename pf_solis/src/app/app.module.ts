@@ -12,6 +12,7 @@ import { reducers, metaReducers } from './session/root-store';
 import { RootEffects } from './session/root-store/root.effects';
 import { MaterialModule } from './shared/material.module';
 import { AlumnosModule } from './alumnos/alumnos.module';
+import { CursosModule } from './cursos/cursos.module';
 import { HomeModule } from './home/home.module';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { HomeModule } from './home/home.module';
     EffectsModule.forRoot([RootEffects]),
     MaterialModule,
     AlumnosModule,
+    CursosModule,
     HomeModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

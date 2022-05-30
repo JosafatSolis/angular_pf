@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { AlumnoItem } from './alumno-item';
 import { MatDialog } from '@angular/material/dialog';
 import * as fromStore from './store';
-import { cargarAlumnos, eliminarAlumno } from './store/alumnos.actions';
-import { selectorAlumnosCargados, selectorEstadoError } from './store/alumnos.selectors';
+import { triggerCargarAlumnos, trigguerEliminarAlumno } from './store/alumnos.actions';
+import { selectorAlumnosCargados, selectorAlumnosEstadoError } from './store/alumnos.selectors';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmarBorradoAlumnosComponent } from './confirmar-borrado-alumnos.component';
 
@@ -15,14 +15,12 @@ import { ConfirmarBorradoAlumnosComponent } from './confirmar-borrado-alumnos.co
   styleUrls: ['./lista-alumnos.component.css']
 })
 export class ListaAlumnosComponent implements OnInit {
-
-  displayedColumns: string[] = ["matricula", "nombre", "apellidos", "email", "action"]
-  selectedRow: any;
-
+  
   alumnos$!: Observable<AlumnoItem[]>;
-
-  estadoError$!: Observable<string>;
   strEstadoError!: string;
+
+  selectedRow: any;
+  displayedColumns: string[] = ["matricula", "nombre", "apellidos", "email", "action"]
 
   constructor(
     private store: Store,
@@ -32,36 +30,34 @@ export class ListaAlumnosComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(cargarAlumnos());
+    this.store.dispatch(triggerCargarAlumnos());
     this.alumnos$ = this.store.select(selectorAlumnosCargados);
-    //this.estadoError$ = this.store.select(selectorEstadoError);
-    this.store.select(selectorEstadoError).subscribe((ee) => this.strEstadoError = ee)
+    this.store.select(selectorAlumnosEstadoError).subscribe((ee) => this.strEstadoError = ee);
   }
 
-  
   changeRowSelected(row: any) {
     this.selectedRow = row;
   }
 
-  onEditarClick(element: AlumnoItem) {
-    this.router.navigate([String(element.id)], {relativeTo: this.route, queryParams: { readOnly: false }})    
+  onEditarClick(alumno: AlumnoItem) {
+    this.router.navigate([String(alumno.id)], {relativeTo: this.route, queryParams: { readOnly: false }});
   }
 
-  onEliminarClick(element: AlumnoItem): void {
+  onEliminarClick(alumno: AlumnoItem): void {
     const dialogRef = this.dialog.open(ConfirmarBorradoAlumnosComponent, {
       width: '400px',
-      data: element
+      data: alumno
     });
-    
+    // Si se dio clic en Aceptar
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(eliminarAlumno(result as AlumnoItem));
+        this.store.dispatch(trigguerEliminarAlumno(result as AlumnoItem));
       }
     })
   }
 
   onDetallesClick(alumno: AlumnoItem) {
-    this.router.navigate([String(alumno.id)], {relativeTo: this.route, queryParams: { readOnly: true }})    
+    this.router.navigate([String(alumno.id)], {relativeTo: this.route, queryParams: { readOnly: true }});
   }
 
   onNuevoClick() {

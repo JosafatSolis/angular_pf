@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { AlumnoItem } from '../alumno-item';
-import { alumnoActualizado, cargarAlumno, cargarAlumnos, cargarAlumnosFailure, cargarAlumnosSuccess, eliminarAlumno, eliminarAlumnoFailure, guardarAlumno, guardarAlumnoFailure } from './alumnos.actions';
+import { alumnoActualizado, triggerCargarAlumno, triggerCargarAlumnos, cargarAlumnosFailure, cargarAlumnosSuccess, trigguerEliminarAlumno, eliminarAlumnoFailure, triggerGuardarAlumno, guardarAlumnoFailure } from './alumnos.actions';
 
 
 export const alumnosFeatureKey = 'alumnosState';
@@ -21,13 +21,13 @@ export const initialState: AlumnosFeatureState = {
 
 export const alumnosReducer = createReducer(
   initialState,
-  on(cargarAlumnos, (estado) => {
+  on(triggerCargarAlumnos, (estado) => {
     return {...estado, cargandoAlumnos: true, estadoError: ''}
   }),
   on(cargarAlumnosSuccess, (estado, {alumnos}) => {
     return {...estado, cargandoAlumnos: false, alumnosCargados: alumnos, estadoError: ''}
   }),
-  on(cargarAlumno, (estado, {id}) => {
+  on(triggerCargarAlumno, (estado, {id}) => {
     return {...estado}
   }),
   on(alumnoActualizado, (estado, {alumno}) => {
@@ -36,13 +36,13 @@ export const alumnosReducer = createReducer(
   on(cargarAlumnosFailure, (estado, {error}) => {
     return {...estado, estadoError: error.message}
   }),
-  on(eliminarAlumno, (estado, {id}) => {
+  on(trigguerEliminarAlumno, (estado, {id}) => {
     return {...estado, estadoError: ''}
   }),
   on(eliminarAlumnoFailure, (estado, {error}) => {
     return {...estado, estadoError: error.message}
   }),
-  on(guardarAlumno, (estado, {alumno}) => {
+  on(triggerGuardarAlumno, (estado, {alumno}) => {
     return {...estado}
   }),
   on(guardarAlumnoFailure, (estado, { error }) => {

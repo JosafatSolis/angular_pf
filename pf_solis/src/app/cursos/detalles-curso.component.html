@@ -1,0 +1,85 @@
+
+<div>
+    <div class="cont-espaciado">
+        <span>Detalles del Curso</span>
+        <span class="espaciado"></span>
+        <button *ngIf="readOnly" mat-button type="button" (click)="onEditarClick()">Editar</button>
+        <button *ngIf="!readOnly" mat-button type="button" (click)="onCancelarClick()">Cancelar</button>
+        <button *ngIf="!formCurso.dirty && readOnly" mat-button type="button" (click)="onEliminarClick()">Eliminar</button>
+        <!-- Se le quita el type="button" a la siguiente línea porque no funciona el link con el formulario de esa forma -->
+        <button *ngIf="formCurso.dirty" mat-button form="formC" >Guardar</button>
+    </div>
+   
+    <form id="formC" [formGroup]="formCurso" (ngSubmit)="onNgSubmit()">
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Id:</mat-label>
+            <input matInput type="text" formControlName="id">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre:</mat-label>
+            <input matInput type="text" formControlName="nombre">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de Inicio:</mat-label>
+            <input matInput type="date" formControlName="fechaInicio">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de Fin:</mat-label>
+            <input matInput type="date" formControlName="fechaFin">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Créditos:</mat-label>
+            <input matInput type="text" formControlName="creditos">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Descripción:</mat-label>
+            <input matInput type="text" formControlName="descripcion">
+        </mat-form-field>
+        <br>
+    </form>
+    <div *ngIf="curso$">
+        <div class="cont-espaciado">
+            <span>Alumnos Inscritos</span>
+            <span class="espaciado"></span>
+            <button mat-button type="button">Agregar Alumno</button>
+        </div>
+        <table mat-table>
+            <!-- Matricula -->
+            <ng-container matColumnDef="matricula">
+                <th mat-header-cell *matHeaderCellDef class="padding-header">Matrícula</th>
+                <td mat-cell *matCellDef="let alumno">{{ alumno.matricula }}</td>
+            </ng-container>
+            <!-- Nombre -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Nombre</th>
+                <td mat-cell *matCellDef="let alumno"> {{alumno.nombre}} </td>
+            </ng-container>
+            <!-- Apellidos -->
+            <ng-container matColumnDef="apellidos">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Apellidos</th>
+                <td mat-cell *matCellDef="let alumno"> {{alumno.apellidos}} </td>
+            </ng-container>
+            <!-- Email -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="padding-header">Email</th>
+                <td mat-cell *matCellDef="let alumno">{{ alumno.email }}</td>
+            </ng-container>
+            <!-- Actions -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers"></th>
+                <td mat-cell *matCellDef="let alumno" class="padding-left">
+                    <a (click)="onBorrarClick(alumno)">Borrar</a>
+                </td>
+            </ng-container>
+            <!-- Define las columnas a mostrar -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

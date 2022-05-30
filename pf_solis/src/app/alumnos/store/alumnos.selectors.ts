@@ -7,23 +7,23 @@ const selectorAlumnos = createFeatureSelector<AlumnosAppState>(alumnosStoreFeatu
 // cargandoAlumnos
 export const selectorCargandoAlumnos = createSelector(
     selectorAlumnos,
-    (featureState) => featureState.alumnosState.cargandoAlumnos
+    (appState) => appState.alumnosState.cargandoAlumnos
 )
 
 // alumnosCargados
 export const selectorAlumnosCargados = createSelector(
     selectorAlumnos,
-    (featureState) => featureState.alumnosState.alumnosCargados
+    (appState) => appState.alumnosState.alumnosCargados
 )
     
 // alumnoActual
 export const selectorAlumnoActual = createSelector(
     selectorAlumnos,
-    (featureState) => featureState.alumnosState.alumnoActual
+    (appState) => appState.alumnosState.alumnoActual
 )
 
 // estadoError
-export const selectorEstadoError = createSelector(
+export const selectorAlumnosEstadoError = createSelector(
     selectorAlumnos,
     (estado) => estado.alumnosState.estadoError
 )

@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { AlumnoItem } from '../alumno-item';
 
-export const cargarAlumnos = createAction(
-  '[Alumnos] Cargar Alumnos'
+export const triggerCargarAlumnos = createAction(
+  '[Alumnos] Trigger Cargar Alumnos'
 );
 
 export const cargarAlumnosSuccess = createAction(
@@ -15,8 +15,8 @@ export const cargarAlumnosFailure = createAction(
   props<{ error: any }>()
 );
 
-export const cargarAlumno = createAction(
-  '[Alumnos] Cargar Alumno',
+export const triggerCargarAlumno = createAction(
+  '[Alumnos] Trigger Cargar Alumno',
   props<{id: number}>()
 )
 
@@ -25,8 +25,8 @@ export const alumnoActualizado = createAction(
   props<{ alumno: AlumnoItem }>()
 )
 
-export const eliminarAlumno = createAction(
-  '[Alumnos] Eliminar Alumno',
+export const trigguerEliminarAlumno = createAction(
+  '[Alumnos] Trigger Eliminar Alumno',
   props<{id: number}>()
 )
 
@@ -35,8 +35,8 @@ export const eliminarAlumnoFailure = createAction(
   props<{error: any}>()
 )
 
-export const guardarAlumno = createAction(
-  '[Alumno] Guardar Alumno',
+export const triggerGuardarAlumno = createAction(
+  '[Alumno] Trigger Guardar Alumno',
   props<{alumno: AlumnoItem}>()
 )
 
@@ -45,8 +45,8 @@ export const guardarAlumnoFailure = createAction(
   props<{error: any}>()
 )
 
-export const crearAlumno = createAction(
-  '[Alumno] Crear Alumno',
+export const triggerCrearAlumno = createAction(
+  '[Alumno] Trigger Crear Alumno',
   props<{ alumno: AlumnoItem}>()
 )
 

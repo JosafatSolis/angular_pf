@@ -11,13 +11,12 @@ import { Observable, take } from 'rxjs';
 import { CursoItem } from '../cursos/curso-item';
 import { AlumnoItem } from './alumno-item';
 import { ConfirmarBorradoAlumnosComponent } from './confirmar-borrado-alumnos.component';
-import * as fromStore from './store';
 import {
   alumnoActualizado,
-  cargarAlumno,
-  crearAlumno,
-  eliminarAlumno,
-  guardarAlumno,
+  triggerCargarAlumno,
+  triggerCrearAlumno,
+  trigguerEliminarAlumno,
+  triggerGuardarAlumno,
 } from './store/alumnos.actions';
 import { selectorAlumnoActual } from './store/alumnos.selectors';
 
@@ -27,6 +26,14 @@ import { selectorAlumnoActual } from './store/alumnos.selectors';
   styleUrls: ['./detalles-alumno.component.css'],
 })
 export class DetallesAlumnoComponent implements OnInit {
+
+  constructor(
+    private store: Store, 
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog,
+    ) {}
+
   readOnly: boolean = true; // Inicia deshabilitado
   alumno$!: Observable<AlumnoItem | null>;
   alumnoId!: number;
@@ -34,6 +41,9 @@ export class DetallesAlumnoComponent implements OnInit {
   dataSource = new MatTableDataSource<CursoItem>();
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
+  // En la tabla Cursos Inscritos
+  displayedColumns: string[] = ['id', 'nombre', 'fechaInicio', 'fechaFin', 'action',];
 
   formAlumno: FormGroup = new FormGroup({
     matricula: new FormControl({ value: '', disabled: this.readOnly }, [
@@ -56,15 +66,7 @@ export class DetallesAlumnoComponent implements OnInit {
     genero: new FormControl({ value: '', disabled: this.readOnly }),
   });
 
-  displayedColumns: string[] = [
-    'id',
-    'nombre',
-    'fechaInicio',
-    'fechaFin',
-    'action',
-  ];
-
-  controls = {
+  controles = {
     matricula: this.formAlumno.get('matricula') as FormControl,
     nombre: this.formAlumno.get('nombre') as FormControl,
     apellidos: this.formAlumno.get('apellidos') as FormControl,
@@ -73,25 +75,28 @@ export class DetallesAlumnoComponent implements OnInit {
     genero: this.formAlumno.get('genero') as FormControl,
   };
 
-  desHabilita() {
+  desHabilita(nvoValor?: boolean) {
+    if (typeof nvoValor != 'undefined') {
+      this.readOnly = nvoValor;
+    }
     this.readOnly
-      ? this.controls.matricula.disable()
-      : this.controls.matricula.enable();
+      ? this.controles.matricula.disable()
+      : this.controles.matricula.enable();
     this.readOnly
-      ? this.controls.nombre.disable()
-      : this.controls.nombre.enable();
+      ? this.controles.nombre.disable()
+      : this.controles.nombre.enable();
     this.readOnly
-      ? this.controls.apellidos.disable()
-      : this.controls.apellidos.enable();
+      ? this.controles.apellidos.disable()
+      : this.controles.apellidos.enable();
     this.readOnly
-      ? this.controls.email.disable()
-      : this.controls.email.enable();
+      ? this.controles.email.disable()
+      : this.controles.email.enable();
     this.readOnly
-      ? this.controls.fechaNacimiento.disable()
-      : this.controls.fechaNacimiento.enable();
+      ? this.controles.fechaNacimiento.disable()
+      : this.controles.fechaNacimiento.enable();
     this.readOnly
-      ? this.controls.genero.disable()
-      : this.controls.genero.enable();
+      ? this.controles.genero.disable()
+      : this.controles.genero.enable();
   }
 
   cancelaEdicion(alumno: AlumnoItem) {
@@ -103,22 +108,14 @@ export class DetallesAlumnoComponent implements OnInit {
       fechaNacimiento: formatDate(alumno.fechaNacimiento, 'yyyy-MM-dd', 'en'),
       genero: alumno.genero,
     });
-    //this.formAlumno.reset(this.formAlumno.value);
-    this.readOnly = true;
-    this.desHabilita();
+    this.desHabilita(true);
   }
 
-  constructor(
-    private store: Store, 
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog,
-    ) {}
-
   ngOnInit(): void {
-    this.route.paramMap.subscribe((map: ParamMap) => {
+    this.route.paramMap.subscribe((pm: ParamMap) => {
       // Se obtiene el Id de la ruta
-      let id = Number(map.get('id'));
+      let id = Number(pm.get('id'));
+      // Se despacha el evento según sea o no un ítem existente
       if (id == 0) {
         this.store.dispatch(
           alumnoActualizado({
@@ -135,30 +132,31 @@ export class DetallesAlumnoComponent implements OnInit {
           })
         );
       } else {
-        this.store.dispatch(cargarAlumno({ id }));
+        this.store.dispatch(triggerCargarAlumno({ id }));
       }
     });
-    // Se asocia el valor del store
+    // Se asocia el valor del store al alumno actual
     this.alumno$ = this.store.select(selectorAlumnoActual);
-    // Cada que cambie, se actualiza el valor por default de los controles
+    // Cada que cambie el alumno actual, se actualiza el valor por default de los controles
     this.alumno$.subscribe((alumno) => {
       if (alumno) {
         this.alumnoId = alumno.id;
         // Se le asigna un valor a cada campo
-        this.controls.matricula.setValue(alumno.matricula);
-        this.controls.nombre.setValue(alumno.nombre);
-        this.controls.apellidos.setValue(alumno.apellidos);
-        this.controls.email.setValue(alumno.email);
-        this.controls.fechaNacimiento.setValue(
+        this.controles.matricula.setValue(alumno.matricula);
+        this.controles.nombre.setValue(alumno.nombre);
+        this.controles.apellidos.setValue(alumno.apellidos);
+        this.controles.email.setValue(alumno.email);
+        this.controles.fechaNacimiento.setValue(
           formatDate(alumno.fechaNacimiento, 'yyyy-MM-dd', 'en')
         );
-        this.controls.genero.setValue(alumno.genero);
+        this.controles.genero.setValue(alumno.genero);
         // Carga los cursos
         this.dataSource.data = alumno.cursos;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
     });
+    // Ver si en los parámetros se indica que sea sólo de lectura
     this.route.queryParams.subscribe((params) => {
       // ¡¡ Cuidado con esta conversión, por alguna razón no funciona si se quiere asignar directamente el valor
       // convertido con "as unknown as boolean" !!
@@ -169,14 +167,14 @@ export class DetallesAlumnoComponent implements OnInit {
   }
 
   onEditarClick() {
-    this.readOnly = false;
-    this.desHabilita();
+    this.desHabilita(false);
   }
 
   onCancelarClick() {
-    this.alumno$.pipe(take(1)).subscribe((alumno) => {
-      alumno ? this.cancelaEdicion(alumno) : null;
-    });
+    // Se utiliza el take(1) para que sólo tenga efecto 1 vez por clic
+    this.alumno$.pipe(take(1)).subscribe((alumno) =>
+      alumno ? this.cancelaEdicion(alumno) : null
+    );
   }
 
   // Eliminar el registro del Alumno
@@ -186,10 +184,11 @@ export class DetallesAlumnoComponent implements OnInit {
         width: '400px',
         data: alumno
       });
-      
+      // Una vez que se cierra..
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.store.dispatch(eliminarAlumno(result as AlumnoItem));
+          // Se dio clic en ACEPTAR
+          this.store.dispatch(trigguerEliminarAlumno(result as AlumnoItem));
           this.router.navigate(['home', 'alumnos']);
         }
       })
@@ -206,15 +205,15 @@ export class DetallesAlumnoComponent implements OnInit {
     if (this.alumnoId) {
       // Alumno existente
       this.store.dispatch(
-        guardarAlumno({ alumno: { ...alumno, id: this.alumnoId } })
+        triggerGuardarAlumno({ alumno: { ...alumno, id: this.alumnoId } })
       );
     } else {
       // Alumno nuevo
       this.store.dispatch(
-        crearAlumno({ alumno })
+        triggerCrearAlumno({ alumno })
       )
     };
-    this.readOnly = true;
-    this.desHabilita();
+    // Pone todo en modo lectura
+    this.desHabilita(true);
   }
 }

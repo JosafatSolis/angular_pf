@@ -1,0 +1,51 @@
+<p *ngIf="strEstadoError">Ocurrió un error, detalles técnicos:<br>
+{{strEstadoError}}</p>
+
+<div *ngIf="!strEstadoError">
+    <div class="cont-espaciado">
+        <span>Cursos Registrados</span>
+        <span class="espaciado"></span>
+        <button mat-button type="button" (click)="onNuevoClick()">Nuevo</button>
+    </div>
+    <div>
+        <table mat-table [dataSource]="cursos$ || []">
+            <!-- Id Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Id</th>
+                <td mat-cell *matCellDef="let curso"> {{curso.id}} </td>
+            </ng-container>
+            <!-- Nombre Column -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Nombre</th>
+                <td mat-cell *matCellDef="let curso" class="padding-left"> {{curso.nombre}} </td>
+            </ng-container>
+            <!-- Fecha Inicio Column -->
+            <ng-container matColumnDef="fechaInicio">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Fecha Inicio</th>
+                <td mat-cell *matCellDef="let curso" class="padding-left"> {{curso.fechaInicio | date: 'dd-MM-yyyy'}} </td>
+            </ng-container>
+            <!-- Fecha Fin Column -->
+            <ng-container matColumnDef="fechaFin">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Fecha Fin</th>
+                <td mat-cell *matCellDef="let curso" class="padding-left"> {{curso.fechaFin | date: 'dd-MM-yyyy'}} </td>
+            </ng-container>
+            <!-- Creditos Column -->
+            <ng-container matColumnDef="creditos">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers">Créditos</th>
+                <td mat-cell *matCellDef="let curso" class="padding-left"> {{curso.creditos}} </td>
+            </ng-container>
+            <!-- Actions Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="padding-headers"></th>
+                <td mat-cell *matCellDef="let curso" class="padding-left">
+                    <a (click)="onEditarClick(curso)" class="hand-pointer">Editar</a> | 
+                    <a (click)="onEliminarClick(curso)" class="hand-pointer">Eliminar</a> | 
+                    <a (click)="onDetallesClick(curso)" class="hand-pointer">Detalles</a>
+                </td>
+            </ng-container>
+            <!-- Definir Carga de Datos -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="changeRowSelected(row)" [class.demo-row-is-clicked]="selectedRow == row"></tr>
+        </table>
+    </div>
+</div>

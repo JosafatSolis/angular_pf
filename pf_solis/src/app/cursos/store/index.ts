@@ -12,7 +12,7 @@ export const cursosStoreFeatureKey = 'cursosStore';
 
 export interface CursosStoreState {
 
-  [fromCursosReducer.cursosFeatureKey]: fromCursosReducer.CursosState;
+  [fromCursosReducer.cursosFeatureKey]: fromCursosReducer.CursosFeatureState;
 }
 
 export const reducers: ActionReducerMap<CursosStoreState> = {
