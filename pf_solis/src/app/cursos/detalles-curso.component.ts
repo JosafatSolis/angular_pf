@@ -30,7 +30,7 @@ export class DetallesCursoComponent implements OnInit {
 
     readOnly: boolean = true;
     curso$!: Observable<CursoItem | null>;
-    cursoId!: number;
+    cursoId!: string;
 
     dataSource = new MatTableDataSource<AlumnoItem>();
     @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
@@ -85,12 +85,12 @@ export class DetallesCursoComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((pm: ParamMap) => {
       // Se obtiene el Id de la ruta
-      let id = Number(pm.get('id'));
+      let id = String(pm.get('id'));
       // Se despacha el evento según sea o no un ítem existente
-      if(id == 0) {
+      if(!id) {
         this.store.dispatch(cursoActualizado({
           curso: {
-            id: 0,
+            id: '',
             nombre: '',
             fechaInicio: new Date(),
             fechaFin: new Date(),

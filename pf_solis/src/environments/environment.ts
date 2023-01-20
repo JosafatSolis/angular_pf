@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_BASE_URL: 'https://62916079cd0c91932b62164e.mockapi.io/'
+  API_BASE_URL: 'https://parseapi.back4app.com/'
 };
 
 /*

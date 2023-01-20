@@ -17,7 +17,7 @@ export const cargarAlumnosFailure = createAction(
 
 export const triggerCargarAlumno = createAction(
   '[Alumnos] Trigger Cargar Alumno',
-  props<{id: number}>()
+  props<{id: string}>()
 )
 
 export const alumnoActualizado = createAction(
@@ -27,7 +27,7 @@ export const alumnoActualizado = createAction(
 
 export const trigguerEliminarAlumno = createAction(
   '[Alumnos] Trigger Eliminar Alumno',
-  props<{id: number}>()
+  props<{id: string}>()
 )
 
 export const eliminarAlumnoFailure = createAction(

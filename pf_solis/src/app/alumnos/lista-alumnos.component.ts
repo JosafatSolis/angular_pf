@@ -40,7 +40,7 @@ export class ListaAlumnosComponent implements OnInit {
   }
 
   onEditarClick(alumno: AlumnoItem) {
-    this.router.navigate([String(alumno.id)], {relativeTo: this.route, queryParams: { readOnly: false }});
+    this.router.navigate([alumno.id], {relativeTo: this.route, queryParams: { readOnly: false }});
   }
 
   onEliminarClick(alumno: AlumnoItem): void {
@@ -57,7 +57,7 @@ export class ListaAlumnosComponent implements OnInit {
   }
 
   onDetallesClick(alumno: AlumnoItem) {
-    this.router.navigate([String(alumno.id)], {relativeTo: this.route, queryParams: { readOnly: true }});
+    this.router.navigate([alumno.id], {relativeTo: this.route, queryParams: { readOnly: true }});
   }
 
   onNuevoClick() {

@@ -36,7 +36,7 @@ export class DetallesAlumnoComponent implements OnInit {
 
   readOnly: boolean = true; // Inicia deshabilitado
   alumno$!: Observable<AlumnoItem | null>;
-  alumnoId!: number;
+  alumnoId!: string;
 
   dataSource = new MatTableDataSource<CursoItem>();
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -114,13 +114,13 @@ export class DetallesAlumnoComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((pm: ParamMap) => {
       // Se obtiene el Id de la ruta
-      let id = Number(pm.get('id'));
+      let id = String(pm.get('id'));
       // Se despacha el evento según sea o no un ítem existente
-      if (id == 0) {
+      if (!id) {
         this.store.dispatch(
           alumnoActualizado({
             alumno: {
-              id: 0,
+              id: '',
               matricula: 0,
               nombre: '',
               apellidos: '',

@@ -1,5 +1,5 @@
 export interface UsuarioItem {
-    id: number,
+    id: string,
     username: string,
     nombre: string,
     pwd: string

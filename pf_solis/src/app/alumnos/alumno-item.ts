@@ -1,7 +1,7 @@
 import { CursoItem } from "../cursos/curso-item"
 
 export interface AlumnoItem {
-    id: number,
+    id: string,
     matricula: number,
     nombre: string,
     apellidos: string,

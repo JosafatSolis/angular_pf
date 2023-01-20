@@ -1,5 +1,5 @@
 export interface CursoItem {
-    id: number,
+    id: string,
     nombre: string,
     fechaInicio: Date,
     fechaFin: Date,
